@@ -1,0 +1,13 @@
+# 이 저장소의 모든 텍스트 파일은 UTF-8(BOM 없음)이며, 체크아웃 시 LF로 통일한다.
+# 목적: git 전달 경로에서 인코딩/줄바꿈 자동 변환으로 한글이 깨지는 것을 방지.
+
+# 기본: git이 텍스트로 판단한 파일은 LF로 정규화
+* text=auto eol=lf
+
+# 문서 파일: UTF-8 + LF 명시 강제
+*.md   text eol=lf working-tree-encoding=UTF-8
+*.html text eol=lf working-tree-encoding=UTF-8
+*.txt  text eol=lf working-tree-encoding=UTF-8
+
+# 바이너리/덤프류는 변환 제외
+*.stackdump binary

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent-Instructions · 사용 설명서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d10;
+  --bg-grid:#11151b;
+  --elev:#13171d;
+  --surface:#171c23;
+  --surface-2:#1c222b;
+  --border:#262d37;
+  --border-bright:#36404d;
+  --text:#e7e4dd;
+  --dim:#9aa1ab;
+  --faint:#616874;
+  --accent:#4fd1c5;
+  --accent-glow:rgba(79,209,197,.18);
+  --amber:#ffb454;
+  --danger:#ff6b6b;
+  --green:#7ee787;
+  --mono:'Martian Mono',ui-monospace,monospace;
+  --code:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:32px}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    linear-gradient(var(--bg-grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--bg-grid) 1px,transparent 1px);
+  background-size:46px 46px;
+  background-position:-1px -1px;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 500px at 78% -8%,var(--accent-glow),transparent 60%),
+    radial-gradient(700px 400px at 0% 100%,rgba(255,180,84,.06),transparent 55%);
+}
+/* grain */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.layout{display:flex;max-width:1240px;margin:0 auto;position:relative;z-index:2}
+
+/* ---------- sidebar ---------- */
+.sidebar{
+  width:268px;flex:0 0 268px;position:sticky;top:0;height:100vh;
+  padding:34px 22px 34px 30px;overflow-y:auto;
+  border-right:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(11,13,16,.6),rgba(11,13,16,.2));
+  backdrop-filter:blur(4px);
+}
+.brand{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.04em;color:var(--text);line-height:1.4}
+.brand .tag{color:var(--accent)}
+.brand-sub{font-family:var(--code);font-size:11px;color:var(--faint);margin-top:6px;letter-spacing:.02em}
+.nav{margin-top:30px;display:flex;flex-direction:column;gap:1px}
+.nav a{
+  font-family:var(--code);font-size:12.5px;color:var(--dim);text-decoration:none;
+  padding:7px 11px;border-radius:6px;border-left:2px solid transparent;
+  display:flex;gap:9px;align-items:baseline;transition:.18s;
+}
+.nav a .n{color:var(--faint);font-size:10.5px;min-width:18px}
+.nav a:hover{color:var(--text);background:var(--surface)}
+.nav a.active{color:var(--accent);border-left-color:var(--accent);background:var(--surface)}
+.nav a.active .n{color:var(--accent)}
+.side-foot{margin-top:30px;padding-top:18px;border-top:1px solid var(--border);font-family:var(--code);font-size:10.5px;color:var(--faint);line-height:1.7}
+
+/* ---------- main ---------- */
+.main{flex:1;min-width:0;padding:0 0 120px}
+.wrap{max-width:830px;padding:0 48px}
+section{padding:64px 0 8px;scroll-margin-top:24px}
+section.first{padding-top:54px}
+
+.eyebrow{font-family:var(--code);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--accent);opacity:.6}
+h1{font-family:var(--mono);font-weight:600;font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.01em;margin-bottom:20px}
+h1 .accent{color:var(--accent)}
+h2{font-family:var(--mono);font-weight:600;font-size:25px;letter-spacing:-.01em;margin-bottom:16px;line-height:1.2}
+h3{font-family:var(--mono);font-weight:500;font-size:15px;letter-spacing:.01em;margin:26px 0 10px;color:var(--text)}
+p{color:var(--dim);margin-bottom:14px}
+p strong,li strong{color:var(--text);font-weight:600}
+a.inline{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(79,209,197,.3)}
+code{font-family:var(--code);font-size:.86em;background:var(--surface-2);color:var(--accent);padding:2px 6px;border-radius:4px;border:1px solid var(--border)}
+.lead{font-size:18.5px;color:var(--text);line-height:1.6;max-width:62ch}
+
+/* hero meta */
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+.chip{font-family:var(--code);font-size:11.5px;color:var(--dim);background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:6px 13px}
+.chip b{color:var(--accent);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:34px 0 6px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.stat{background:var(--elev);padding:18px 16px}
+.stat .v{font-family:var(--mono);font-weight:600;font-size:26px;color:var(--text);line-height:1}
+.stat .v .u{font-size:13px;color:var(--accent)}
+.stat .k{font-family:var(--code);font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-top:8px}
+
+/* cards / callouts */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.card h3{margin-top:0}
+.card p{font-size:14px;margin-bottom:0}
+.card .lbl{font-family:var(--code);font-size:11px;color:var(--accent);letter-spacing:.04em}
+
+.callout{border-radius:10px;padding:18px 20px;margin:20px 0;border:1px solid var(--border);background:var(--surface);position:relative;padding-left:22px}
+.callout::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--accent)}
+.callout.warn::before{background:var(--amber)}
+.callout.danger::before{background:var(--danger)}
+.callout .ct{font-family:var(--mono);font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text);display:flex;gap:8px;align-items:center}
+.callout.warn .ct{color:var(--amber)}
+.callout.danger .ct{color:var(--danger)}
+.callout p{font-size:14px;margin:0}
+
+/* code block / tree */
+pre{background:#0c0f13;border:1px solid var(--border);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:18px 0;font-family:var(--code);font-size:13px;line-height:1.75;color:var(--dim)}
+pre .c{color:var(--faint)}
+pre .a{color:var(--accent)}
+pre .am{color:var(--amber)}
+pre .g{color:var(--green)}
+.prompt{color:var(--accent)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-family:var(--code);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:500;background:var(--elev)}
+td{color:var(--dim)}
+td code{font-size:12px}
+tr:last-child td{border-bottom:none}
+table.bordered{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+
+/* checklist */
+.check{list-style:none;margin:18px 0;display:flex;flex-direction:column;gap:2px}
+.check li{display:flex;gap:13px;align-items:flex-start;padding:13px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:.16s;font-size:14px;color:var(--dim)}
+.check li:hover{border-color:var(--border-bright)}
+.check li .box{flex:0 0 18px;width:18px;height:18px;border:1.5px solid var(--faint);border-radius:5px;margin-top:2px;position:relative;transition:.16s}
+.check li.done .box{background:var(--accent);border-color:var(--accent)}
+.check li.done .box::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#06201d;font-size:12px;font-weight:700}
+.check li.done{color:var(--faint)}
+.check li.done .tx{text-decoration:line-through}
+.check li .tx b{color:var(--text)}
+.check li.done .tx b{color:var(--faint)}
+
+/* faq */
+.faq{border-top:1px solid var(--border)}
+.faq details{border-bottom:1px solid var(--border)}
+.faq summary{font-family:var(--mono);font-size:14px;font-weight:500;padding:16px 4px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px;color:var(--text)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-family:var(--code);font-size:18px;transition:.2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 4px 18px;font-size:14px}
+
+ul.bul{margin:12px 0 16px;padding-left:4px;list-style:none}
+ul.bul li{position:relative;padding-left:22px;margin-bottom:9px;font-size:14.5px;color:var(--dim)}
+ul.bul li::before{content:"▸";position:absolute;left:2px;color:var(--accent);font-size:12px;top:1px}
+
+.foot{margin-top:60px;padding:30px 0 0;border-top:1px solid var(--border);font-family:var(--code);font-size:11.5px;color:var(--faint);line-height:1.9}
+.divider{height:1px;background:linear-gradient(90deg,var(--border),transparent);margin:8px 0 0}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.r1{animation-delay:.05s}.r2{animation-delay:.13s}.r3{animation-delay:.21s}.r4{animation-delay:.29s}.r5{animation-delay:.37s}
+
+/* mobile */
+.menu-btn{display:none}
+@media(max-width:880px){
+  .sidebar{position:fixed;left:0;top:0;z-index:50;transform:translateX(-100%);transition:.25s;box-shadow:0 0 40px rgba(0,0,0,.5)}
+  .sidebar.open{transform:none}
+  .menu-btn{display:flex;position:fixed;top:14px;right:14px;z-index:60;background:var(--surface);border:1px solid var(--border-bright);color:var(--accent);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-family:var(--code);cursor:pointer;font-size:18px}
+  .wrap{padding:0 22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<button class="menu-btn" id="menuBtn" aria-label="목차">≡</button>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">AGENT&#8209;INSTRUCTIONS<span class="tag">/</span><br>사용 설명서</div>
+    <div class="brand-sub">v1.0 · 2026-06-09</div>
+    <nav class="nav" id="nav">
+      <a href="#overview"><span class="n">00</span>개요</a>
+      <a href="#philosophy"><span class="n">01</span>설계 철학</a>
+      <a href="#structure"><span class="n">02</span>패키지 구성</a>
+      <a href="#quickstart"><span class="n">03</span>빠른 시작</a>
+      <a href="#install"><span class="n">04</span>설치 · 적용</a>
+      <a href="#usage"><span class="n">05</span>사용법</a>
+      <a href="#catalog"><span class="n">06</span>스킬 · MCP 카탈로그</a>
+      <a href="#contributing"><span class="n">07</span>규칙 운영 · 기여</a>
+      <a href="#maintenance"><span class="n">08</span>유지보수</a>
+      <a href="#predeploy"><span class="n">09</span>공개 전 점검</a>
+      <a href="#limitations"><span class="n">10</span>알려진 한계</a>
+      <a href="#faq"><span class="n">11</span>FAQ</a>
+      <a href="#meta"><span class="n">12</span>출처 · 라이선스</a>
+    </nav>
+    <div class="side-foot">CLAUDE CODE<br>AGENT GOVERNANCE KIT<br>// 팀 표준 · 공개 배포용</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+  <div class="wrap">
+
+    <!-- 00 OVERVIEW -->
+    <section id="overview" class="first">
+      <div class="eyebrow reveal r1">Claude Code · Agent Governance Kit</div>
+      <h1 class="reveal r2">AI 에이전트를<br><span class="accent">운영하는 표준</span> 한 벌.</h1>
+      <p class="lead reveal r3">Agent-Instructions는 Claude Code 에이전트가 <strong>"어디까지 해도 되고 무엇은 절대 안 되는지"</strong>를 규정하는 지침 체계와, <strong>"어떤 스킬·MCP가 있고 언제 쓰는지"</strong>를 담은 레퍼런스 카탈로그를 한 폴더로 묶은 패키지입니다.</p>
+      <div class="hero-meta reveal r4">
+        <span class="chip">진입점 <b>AGENTS.md</b> (60줄)</span>
+        <span class="chip">운영 축 <b>4</b>분할</span>
+        <span class="chip">팀 표준 · 공개 배포</span>
+      </div>
+      <div class="stats reveal r5">
+        <div class="stat"><div class="v">97<span class="u">개</span></div><div class="k">노출 스킬</div></div>
+        <div class="stat"><div class="v">22<span class="u">개</span></div><div class="k">OFF 스킬</div></div>
+        <div class="stat"><div class="v">12<span class="u">개</span></div><div class="k">활성 MCP</div></div>
+        <div class="stat"><div class="v">4<span class="u">개</span></div><div class="k">OFF MCP</div></div>
+      </div>
+    </section>
+
+    <!-- 01 PHILOSOPHY -->
+    <section id="philosophy">
+      <div class="eyebrow">01 — Why</div>
+      <h2>설계 철학</h2>
+      <p>AI 에이전트는 강력하지만, 규칙·경계·피드백이 없으면 빠르게 일관성을 잃습니다. 이 패키지는 그 통제를 <strong>두 가지 원칙</strong>으로 구조화합니다.</p>
+
+      <h3>원칙 1 — 60줄 진입점 + 세부 분리</h3>
+      <p>에이전트가 가장 먼저 읽는 <code>AGENTS.md</code>는 <strong>60줄 이하</strong>로 유지합니다. 1,000페이지 설명서는 읽히지 않습니다. 핵심 규칙만 진입점에 두고, 세부는 <code>rules/</code>·<code>Skill/</code>·<code>MCP/</code>로 분리해 <strong>필요할 때만</strong> 펴보게 합니다.</p>
+
+      <h3>원칙 2 — 4대 운영 축</h3>
+      <p>지침은 <code>rules/</code> 아래 네 축으로 나뉩니다.</p>
+      <div class="grid2">
+        <div class="card"><div class="lbl">01_enforcement-system</div><h3>강제 시스템</h3><p>검증·테스트·커밋 강제. "성공은 조용히, 실패만 시끄럽게."</p></div>
+        <div class="card"><div class="lbl">02_tool-boundaries</div><h3>도구 경계</h3><p>RAG·서브에이전트·MCP·팀·Windows 도구를 언제·어디까지 쓰는지 + 스킬/MCP 사용 가이드.</p></div>
+        <div class="card"><div class="lbl">03_feedback-loop</div><h3>피드백 루프</h3><p>코딩 → 리뷰 → 규칙 보강 → 반복. 실수는 한 줄씩 누적.</p></div>
+        <div class="card"><div class="lbl">04_garbage-collection</div><h3>가비지 컬렉션</h3><p>문서-코드 정합, 데드코드, 미사용 규칙 주기적 청소.</p></div>
+      </div>
+    </section>
+
+    <!-- 02 STRUCTURE -->
+    <section id="structure">
+      <div class="eyebrow">02 — Structure</div>
+      <h2>패키지 구성</h2>
+      <p>크게 <strong>지침 레이어</strong>(에이전트가 따르는 규칙)와 <strong>레퍼런스 레이어</strong>(필요할 때 펴보는 카탈로그)로 나뉩니다.</p>
+      <pre><span class="c"># 지침 레이어 — 에이전트가 읽고 따른다</span>
+<span class="a">AGENTS.md</span>              <span class="c">진입점(60줄): 행동 규칙 + 스킬/MCP 요약</span>
+<span class="a">rules/</span>
+ ├ 01_enforcement-system.md   <span class="c">강제</span>
+ ├ 02_tool-boundaries.md      <span class="c">도구 경계 + 스킬/MCP 사용 가이드</span>
+ ├ 03_feedback-loop.md        <span class="c">피드백 루프</span>
+ └ 04_garbage-collection.md   <span class="c">가비지 컬렉션</span>
+
+<span class="c"># 레퍼런스 레이어 — 필요할 때 펴본다</span>
+<span class="am">Skill/</span>                 <span class="c">스킬 119개 (노출 97 + OFF 22), 스킬 1개당 md 1개</span>
+ ├ README.md           <span class="c">스킬 분류 인덱스</span>
+ ├ _builtin/ (13)  _personal/ (4)
+ ├ _disabled/ (22)     <span class="c">OFF 플러그인 카탈로그</span>
+ └ superpowers/ huggingface-skills/ firecrawl/ figma/ …
+<span class="am">MCP/</span>                   <span class="c">MCP 16개 (ON 12 + OFF 4)</span>
+ ├ README.md
+ ├ claude-ai-PlayMCP/  <span class="c">하위 5개 서버</span>
+ └ notion · context7 · figma · playwright · …
+<span class="g">references/</span>            <span class="c">프로젝트 도메인 지식</span></pre>
+      <div class="callout"><div class="ct">레이어를 구분하는 이유</div><p><strong>AGENTS.md(짧음)</strong>는 매 세션 읽히고, <strong>Skill/·MCP/(방대)</strong>는 특정 동작이 궁금할 때만 참조됩니다. 이 분리가 곧 "60줄 + 세부 파일" 원칙의 구현입니다.</p></div>
+    </section>
+
+    <!-- 03 QUICKSTART -->
+    <section id="quickstart">
+      <div class="eyebrow">03 — Quick Start</div>
+      <h2>빠른 시작</h2>
+      <p>이 패키지를 환경에 <strong>배치</strong>하는 4단계입니다. (여기서 '배치'는 행동 규칙 <em>적용</em>의 전 단계 — 규칙 적용은 배치 후 <code>AGENTS.md</code>가 안내하며, 비-Claude AI는 <code>PORTABILITY.md</code>를 따른다.)</p>
+      <pre><span class="prompt">$</span> <span class="c"># 1. 저장소 클론</span>
+<span class="prompt">$</span> git clone &lt;repo-url&gt; Agent-Instructions
+
+<span class="prompt">$</span> <span class="c"># 2. 작업할 프로젝트 루트에 배치 (또는 심볼릭 링크)</span>
+<span class="prompt">$</span> cp -r Agent-Instructions /path/to/your-project/
+
+<span class="prompt">$</span> <span class="c"># 3. 에이전트에게 진입점을 읽히기</span>
+<span class="prompt">›</span> "Agent-Instructions/AGENTS.md 를 읽고 그 규칙에 따라 작업해줘"
+
+<span class="prompt">$</span> <span class="c"># 4. 스킬/MCP가 궁금하면 카탈로그 참조</span>
+<span class="prompt">›</span> "Skill/README.md 에서 적합한 스킬을 찾아 적용"</pre>
+      <div class="callout warn"><div class="ct">⚠ 클론 직후 1가지</div><p>이 카탈로그는 <strong>특정 환경의 스냅샷</strong>입니다. 당신의 플러그인/MCP 구성이 다르면 <a href="#maintenance" class="inline">유지보수</a> 절차로 카탈로그를 갱신하세요.</p></div>
+    </section>
+
+    <!-- 04 INSTALL -->
+    <section id="install">
+      <div class="eyebrow">04 — Install</div>
+      <h2>설치 · 적용</h2>
+      <h3>배치 위치</h3>
+      <ul class="bul">
+        <li><strong>프로젝트 루트</strong>에 두면 해당 프로젝트 작업 시 에이전트가 진입점을 발견하기 쉽습니다.</li>
+        <li>여러 프로젝트에서 공유하려면 공통 위치에 두고 각 프로젝트에서 참조하도록 안내합니다.</li>
+      </ul>
+      <h3>전제 조건</h3>
+      <table class="bordered">
+        <tr><th>항목</th><th>요구</th></tr>
+        <tr><td>Claude Code</td><td>최신 버전 권장 (스킬·MCP·서브에이전트 지원)</td></tr>
+        <tr><td>플러그인</td><td>카탈로그에 적힌 플러그인이 설치/활성(ON)이어야 해당 스킬이 실제로 동작</td></tr>
+        <tr><td>MCP 서버</td><td><code>claude mcp add --scope user</code>로 등록 (settings.json 직접 편집 금지)</td></tr>
+        <tr><td>Windows</td><td>Bash <code>$VAR</code> 확장 안 됨, 따옴표 이슈 → 경로 직접 지정·Glob/Grep/Read 우선</td></tr>
+      </table>
+      <h3>에이전트가 AGENTS.md를 읽게 하는 법</h3>
+      <p>Claude Code는 <code>CLAUDE.md</code>를 자동으로 읽습니다. <code>AGENTS.md</code>는 진입점으로 명시 참조하거나, 프로젝트 <code>CLAUDE.md</code>에서 링크해 두면 됩니다.</p>
+    </section>
+
+    <!-- 05 USAGE -->
+    <section id="usage">
+      <div class="eyebrow">05 — Usage</div>
+      <h2>사용법</h2>
+      <h3>작업 3단계 흐름</h3>
+      <p>지침이 강제하는 기본 작업 흐름입니다.</p>
+      <table class="bordered">
+        <tr><th>단계</th><th>내용</th></tr>
+        <tr><td><b>1. 디스커션</b></td><td>핵심 의도 파악. 모호하면 먼저 질문(추측 금지). 실현 가능성·사이드이펙트 판단.</td></tr>
+        <tr><td><b>2. 요구사항 정리</b></td><td>무엇을·어디서·어떻게·왜. 수정 범위·영향 파일·주의사항 정리 후 승인.</td></tr>
+        <tr><td><b>3. 실행</b></td><td>도구로 수행. 예상과 다르면 즉시 멈추고 1단계로. 땜빵 금지, 근본 원인 해결.</td></tr>
+      </table>
+      <h3>스킬을 언제 쓰는가</h3>
+      <p>스킬이 적용되면 <strong>먼저 호출</strong>하고 "Using [skill]"를 알립니다. 상황별 매핑은 <code>rules/02</code>에, 전체 목록은 <code>Skill/README.md</code>에 있습니다.</p>
+      <table class="bordered">
+        <tr><th>상황</th><th>스킬(군)</th></tr>
+        <tr><td>새로 만들기 전</td><td><code>brainstorming</code> → <code>writing-plans</code></td></tr>
+        <tr><td>기능/버그 구현</td><td><code>test-driven-development</code>, <code>systematic-debugging</code></td></tr>
+        <tr><td>마무리·검증</td><td><code>verify</code>, <code>code-review</code>, <code>simplify</code></td></tr>
+        <tr><td>웹 스크래핑·리서치</td><td><code>firecrawl-*</code>, <code>deep-research</code></td></tr>
+        <tr><td>라이브러리 문서</td><td><code>context7</code> (MCP)</td></tr>
+      </table>
+    </section>
+
+    <!-- 06 CATALOG -->
+    <section id="catalog">
+      <div class="eyebrow">06 — Catalog</div>
+      <h2>스킬 · MCP 카탈로그</h2>
+      <p>모든 스킬 md는 동일한 <strong>5개 항목</strong>으로 작성됩니다: 용도 / 트리거 조건 / 사용 예시·명령어 / 제공 도구·파라미터 / 출처·설치 상태.</p>
+      <h3>스킬 분류 (노출 97)</h3>
+      <table class="bordered">
+        <tr><th>그룹</th><th>수</th><th>대표</th></tr>
+        <tr><td>빌트인 <code>_builtin</code></td><td>13</td><td>code-review · verify · run · loop · schedule</td></tr>
+        <tr><td>개인 <code>_personal</code></td><td>4</td><td>claude-news · handover · deep-research</td></tr>
+        <tr><td>superpowers</td><td>14</td><td>brainstorming · TDD · 디버깅 · 플랜</td></tr>
+        <tr><td>huggingface-skills</td><td>18</td><td>HF Hub · 모델 학습 · Spaces</td></tr>
+        <tr><td>firecrawl</td><td>11</td><td>스크래핑 · 검색 · 크롤 · 모니터</td></tr>
+        <tr><td>figma</td><td>9</td><td>디자인 · 다이어그램 · 프로젝트 플랜</td></tr>
+        <tr><td>plugin-dev · chrome-devtools · 외</td><td>28</td><td>플러그인 개발 · 브라우저 디버깅 · 기타</td></tr>
+      </table>
+      <h3>MCP 서버 (ON 12)</h3>
+      <ul class="bul">
+        <li><strong>notion</strong> — 페이지/DB 읽기·검색 (수정은 전체 삭제→재생성)</li>
+        <li><strong>context7</strong> — 라이브러리 공식 문서 조회</li>
+        <li><strong>playwright</strong> — 브라우저 자동화·E2E</li>
+        <li><strong>figma · huggingface-skills</strong> — 디자인/HF 연동</li>
+        <li><strong>claude.ai PlayMCP</strong> — 네이버검색·사람인·미국주식·DART·카카오 (하위 5)</li>
+      </ul>
+      <div class="callout"><div class="ct">비노출 ON 플러그인 (의도된 제외)</div><p><code>atomic-agents</code>와 LSP 4종(rust-analyzer·typescript·pyright·csharp)은 ON이지만 스킬/MCP로 노출되지 않아 카탈로그에서 제외됩니다 — 누락이 아닙니다.</p></div>
+    </section>
+
+    <!-- 07 CONTRIBUTING -->
+    <section id="contributing">
+      <div class="eyebrow">07 — Operate</div>
+      <h2>규칙 운영 · 기여</h2>
+      <p>팀 표준이므로 규칙은 <strong>살아있는 문서</strong>입니다. 에이전트가 같은 실수를 반복하면 규칙을 보강합니다.</p>
+      <h3>규칙 추가 시 배치 기준</h3>
+      <table class="bordered">
+        <tr><th>성격</th><th>위치</th></tr>
+        <tr><td>나(사용자)에 대한 것 — 언어·스타일·습관</td><td><code>~/.claude/CLAUDE.md</code></td></tr>
+        <tr><td>프로젝트 핵심 정보 — 구조·상태·워크플로우</td><td>프로젝트 <code>CLAUDE.md</code> / 이 패키지</td></tr>
+        <tr><td>특정 주제 상세 — 트러블슈팅·도구 경계</td><td><code>rules/</code></td></tr>
+        <tr><td>개인용·git 제외 — 로컬 경로·개인 설정</td><td><code>CLAUDE.local.md</code></td></tr>
+      </table>
+      <h3>추가 전 체크</h3>
+      <ul class="bul">
+        <li>이 규칙을 빼면 에이전트가 실제로 실수하는가? 아니면 넣지 않는다.</li>
+        <li>린터/포매터가 잡아주는가? 그러면 넣지 않는다.</li>
+        <li>해당 파일이 너무 길어지는가? 넘으면 <code>rules/</code>로 분리한다.</li>
+      </ul>
+      <p>공개 저장소이므로 변경은 PR로 제안하고, <strong>실패 로그</strong>(AGENTS.md 하단)에 재발 방지 한 줄을 누적합니다.</p>
+    </section>
+
+    <!-- 08 MAINTENANCE -->
+    <section id="maintenance">
+      <div class="eyebrow">08 — Maintain</div>
+      <h2>유지보수</h2>
+      <p>가비지 컬렉션(<code>rules/04</code>) 원칙에 따라 주기적으로 점검합니다.</p>
+      <ul class="bul">
+        <li><strong>문서-실제 정합</strong> — 스킬/MCP를 추가·제거하면 <code>Skill/</code>·<code>MCP/</code> 카탈로그와 README 숫자를 함께 갱신.</li>
+        <li><strong>버전 드리프트</strong> — 플러그인 캐시 경로의 버전이 바뀌면 출처 표기 갱신.</li>
+        <li><strong>데드 항목</strong> — 미사용 규칙·끊긴 링크·중복 경고 정리.</li>
+      </ul>
+      <h3>카탈로그 갱신 방법</h3>
+      <p>플러그인 캐시(<code>~/.claude/plugins/cache/</code>)의 실제 <code>SKILL.md</code>를 근거로 작성합니다. 에이전트에게 "현재 스킬/MCP 구성을 다시 조사해 카탈로그를 갱신해줘"라고 요청하면 됩니다.</p>
+    </section>
+
+    <!-- 09 PRE-DEPLOY -->
+    <section id="predeploy">
+      <div class="eyebrow">09 — Pre-deploy</div>
+      <h2>공개 전 점검</h2>
+      <p>공개 GitHub로 배포하기 전 <strong>반드시</strong> 확인합니다. 클릭해서 체크하세요.</p>
+      <ul class="check" id="checklist">
+        <li><span class="box"></span><span class="tx"><b>개인 절대경로 치환</b> — 스킬 md의 캐시 경로 <code>C:\Users\&lt;name&gt;\…</code> → <code>~/.claude/…</code> 등 제네릭으로</span></li>
+        <li><span class="box"></span><span class="tx"><b>사용자명 노출 제거</b> — 경로·예시에 박힌 계정명/이메일</span></li>
+        <li><span class="box"></span><span class="tx"><b>references 공개 적절성</b> — 비공개 프로젝트 도메인 지식이 들어있지 않은지</span></li>
+        <li><span class="box"></span><span class="tx"><b>내부 repo·링크 확인</b> — rules에 박힌 사내 저장소 URL의 공개 의도</span></li>
+        <li><span class="box"></span><span class="tx"><b>토큰·시크릿 부재 재확인</b> — 저장소 어디에도 토큰이 없는지</span></li>
+        <li><span class="box"></span><span class="tx"><b>LICENSE · CONTRIBUTING 추가</b> — 공개 저장소 표준 파일</span></li>
+      </ul>
+      <div class="callout danger"><div class="ct">왜 중요한가</div><p>"그대로 패키징"하면 <strong>특정 환경의 개인 경로·계정명·내부 정보</strong>가 공개 저장소에 그대로 노출됩니다. 카탈로그가 당신의 설치 상태 스냅샷이라는 점도 받는 사람에게 명시해야 혼란이 없습니다.</p></div>
+    </section>
+
+    <!-- 10 LIMITATIONS -->
+    <section id="limitations">
+      <div class="eyebrow">10 — Limits</div>
+      <h2>알려진 한계</h2>
+      <ul class="bul">
+        <li><strong>카탈로그 = 스냅샷</strong> — 스킬 97·MCP 16은 작성 환경 기준. 다른 환경에선 목록이 다를 수 있음.</li>
+        <li><strong>neon 스킬 원문 미vendoring</strong> — 원본 SKILL.md가 깨진 심볼릭 링크라 매니페스트 메타데이터 기반으로 작성(문서 자체는 완결). 원문은 원본 저장소 참조.</li>
+        <li><strong>캐시 경로 환경 종속</strong> — 출처의 절대경로는 작성 환경 기준이라 그대로는 무의미(공개 전 치환 권장).</li>
+      </ul>
+    </section>
+
+    <!-- 11 FAQ -->
+    <section id="faq">
+      <div class="eyebrow">11 — FAQ</div>
+      <h2>자주 묻는 질문</h2>
+      <div class="faq">
+        <details><summary>에이전트가 AGENTS.md를 안 읽어요.</summary><p>Claude Code가 자동으로 읽는 것은 <code>CLAUDE.md</code>입니다. <code>AGENTS.md</code>는 진입점으로 명시 참조하거나 프로젝트 <code>CLAUDE.md</code>에서 링크해 두세요.</p></details>
+        <details><summary>카탈로그의 스킬이 제 환경엔 없어요.</summary><p>카탈로그는 작성 환경의 플러그인 설치 상태 스냅샷입니다. 해당 플러그인을 설치/활성(ON)하거나, 유지보수 절차로 카탈로그를 당신 구성에 맞게 갱신하세요.</p></details>
+        <details><summary>스킬과 MCP의 차이가 뭔가요?</summary><p>스킬은 Claude가 따르는 절차/방법론 패키지이고, MCP는 외부 도구·서비스를 연결하는 서버입니다. 카탈로그는 둘을 각각 <code>Skill/</code>·<code>MCP/</code>로 분리해 둡니다.</p></details>
+        <details><summary>왜 README.md가 아니라 AGENTS.md가 진입점인가요?</summary><p>README는 사람용 소개·사용법(이 문서), AGENTS.md는 AI가 따르는 행동 지침으로 역할이 분리됩니다. AI 도구 생태계의 공통 관례(AGENTS.md)를 따릅니다.</p></details>
+      </div>
+    </section>
+
+    <!-- 12 META -->
+    <section id="meta">
+      <div class="eyebrow">12 — Meta</div>
+      <h2>출처 · 라이선스 · 버전</h2>
+      <ul class="bul">
+        <li><strong>버전</strong> — v1.0 · 기준일 2026-06-09</li>
+        <li><strong>대상</strong> — Claude Code 에이전트 (팀 내부 표준, 공개 배포)</li>
+        <li><strong>구성 근거</strong> — 각 스킬/MCP는 플러그인 캐시의 실제 <code>SKILL.md</code>·<code>.mcp.json</code>을 근거로 작성됨.</li>
+        <li><strong>라이선스</strong> — 공개 배포 시 <code>LICENSE</code> 파일을 추가하세요(예: MIT).</li>
+      </ul>
+      <div class="foot">
+        <div class="divider"></div>
+        AGENT-INSTRUCTIONS · USAGE MANUAL<br>
+        Claude Code Agent Governance Kit — 진입점은 <span style="color:var(--accent)">AGENTS.md</span>, 세부는 <span style="color:var(--amber)">rules/ · Skill/ · MCP/</span><br>
+        // 성공은 조용히, 실패만 시끄럽게.
+      </div>
+    </section>
+
+  </div>
+  </main>
+</div>
+
+<script>
+// active nav via IntersectionObserver
+const links=[...document.querySelectorAll('#nav a')];
+const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+const obs=new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=map.get(e.target.id); if(a)a.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px',threshold:0});
+document.querySelectorAll('section').forEach(s=>obs.observe(s));
+
+// mobile menu
+const sb=document.getElementById('sidebar'),btn=document.getElementById('menuBtn');
+btn.addEventListener('click',()=>sb.classList.toggle('open'));
+document.querySelectorAll('#nav a').forEach(a=>a.addEventListener('click',()=>sb.classList.remove('open')));
+
+// interactive checklist (+persist in this session)
+document.querySelectorAll('#checklist li').forEach(li=>{
+  li.addEventListener('click',()=>li.classList.toggle('done'));
+});
+</script>
+</body>
+</html>
