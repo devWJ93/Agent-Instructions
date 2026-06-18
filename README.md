@@ -69,6 +69,7 @@ Agent-Instructions/
 ├─ GETTING_STARTED.md     ← 사람/AI용 빠른 적용 절차
 ├─ SECURITY.md            ← 공개·보안 기준
 ├─ CHANGELOG.md           ← 공개 저장소 변경 이력
+├─ codex-global-AGENTS.md ← Codex 전역 ~/.codex/AGENTS.md용 지침
 ├─ LICENSE                ← 저장소 문서 라이선스
 ├─ index.html             ← 사람용 설명서 (AI는 무시해도 됨)
 ├─ PORTABILITY.md         ← 다른 AI(비-Claude)에서 스킬/MCP 쓰는 이식 가이드

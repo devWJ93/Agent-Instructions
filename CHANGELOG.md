@@ -9,6 +9,8 @@
 - `SECURITY.md`를 추가해 토큰, 인증 헤더, 개인 설정 파일, 내부 프로젝트 지식의 공개 금지 기준을 명시했다.
 - `LICENSE`를 추가해 직접 작성한 문서의 재사용 범위와 타사 자료의 별도 라이선스 적용 범위를 구분했다.
 - Codex CLI의 `AGENTS.md` 로딩 방식과 `rules/*.md` 문서, `~/.codex/rules/*.rules` 승인 정책의 차이를 `GETTING_STARTED.md`에 추가했다.
+- 핵심 검증·보안·파일 읽기·중단 조건을 `AGENTS.md` 본문에 직접 추가해 링크 문서를 읽지 않아도 최소 규칙이 적용되도록 했다.
+- Codex 전역 `~/.codex/AGENTS.md`에 복사하기 위한 `codex-global-AGENTS.md`를 추가했다.
 
 ### Changed
 
