@@ -5,7 +5,7 @@
 
 ---
 
-## 노출 스킬 (97)
+## 노출 스킬 (98)
 
 ### _builtin (13)
 - **claude-api** — Claude API / Anthropic SDK 레퍼런스 빌트인 스킬. model id·가격·파라미터·스트리밍·tool use·MCP·캐싱·토큰 카운팅·모델 마이그레이션을 다룬다. **Claude/Anthropic 관련 작업 시 파일을 열기 전에 먼저 읽는 트리거 스킬**.
@@ -22,11 +22,12 @@
 - **update-config** — `settings.json` / `settings.local.json`을 직접 편집해 Claude Code 하네스(harness)를 설정하는 빌트인 스킬. 권한·환경변수·hook·자동 동작을 다룬다.
 - **verify** — 코드 변경이 **실제로 의도대로 동작하는지** 앱을 직접 실행해 동작을 관찰하며 검증하는 빌트인 스킬.
 
-### _personal (4)
+### _personal (5)
 - **claude-news** — Claude Code 릴리스 노트 + Anthropic 모델/제품 소식을 **한국어로 요약**하는 개인 글로벌 스킬. 새 기능과 주요 변경을 카테고리별로 정리해 보여준다.
 - **deep-research** — 멀티소스 웹 검색 + 소스 fetch + **교차검증(adversarial verify)** + 인용 포함 리포트 합성을 수행하는 개인 글로벌 딥리서치 스킬.
 - **delete-session** — 현재 프로젝트의 **세션 목록을 보여주고**, 선택한 세션의 `jsonl` 파일을 삭제해 resume 리스트에서 제거하는 개인 글로벌 스킬.
 - **handover** — 현재 세션 전체 내용을 **다음 세션 인수인계용 md 파일**로 정리·저장하는 개인 글로벌 스킬.
+- **hexagonal-code-review** — 헥사고날 아키텍처 / Ports and Adapters 기준으로 코드·diff·모듈·저장소를 리뷰하고, 요청 시 레이어 책임에 맞게 작성 또는 리팩토링하는 개인 글로벌 스킬.
 
 ### superpowers (14)
 - **brainstorming** — 모든 창작 작업(기능/컴포넌트/동작 추가·변경) 전에 반드시 거쳐야 하는, 아이디어를 검증된 설계·스펙으로 발전시키는 대화형 디스커션 스킬.

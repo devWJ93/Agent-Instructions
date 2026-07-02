@@ -1,6 +1,16 @@
 <!-- 이 문서는 Agent-Instructions 저장소의 공개 변경 이력을 기록한다. -->
 # Changelog
 
+## 2026-07-02
+
+### Added
+
+- `hexagonal-code-review` 개인 글로벌 스킬 카탈로그를 추가해 헥사고날 아키텍처 / Ports and Adapters 기준의 코드 리뷰와 리팩토링 적용 기준을 문서화했다.
+
+### Changed
+
+- 스킬 인덱스와 README의 노출 스킬 수를 98개, 개인 글로벌 스킬 수를 5개로 갱신했다.
+
 ## 2026-06-18
 
 ### Added

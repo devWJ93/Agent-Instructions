@@ -1,9 +1,9 @@
 # 스킬 인덱스
 
-현재 세션에서 호출 가능한(노출된) 최상위 스킬 **97개**를 출처별로 정리했습니다.
+현재 세션에서 호출 가능한(노출된) 최상위 스킬 **98개**를 출처별로 정리했습니다.
 ※ 플러그인 내부 reference 하위 스킬(chrome-devtools 65개, huggingface 68개 등 SKILL.md)은 세션에서 직접 참고하는 단위가 아니므로 제외했습니다.
 
-> 📋 **각 스킬의 한 줄 설명 목차**는 [`CATALOG.md`](CATALOG.md) 참조(노출 97 + OFF 22, 스킬별 요약). 이 README는 분류·수치·출처를 다룬다.
+> 📋 **각 스킬의 한 줄 설명 목차**는 [`CATALOG.md`](CATALOG.md) 참조(노출 98 + OFF 22, 스킬별 요약). 이 README는 분류·수치·출처를 다룬다.
 
 ## 분류
 
@@ -20,7 +20,7 @@ Claude Code 내장 스킬. 별도 파일 없이 하네스에 내장.
 | [init](_builtin/init.md) | CLAUDE.md 초기화 | [review](_builtin/review.md) | PR 리뷰 |
 | [security-review](_builtin/security-review.md) | 보안 취약점 리뷰 | | |
 
-### 👤 개인 글로벌 스킬 (`_personal/`, 4개)
+### 👤 개인 글로벌 스킬 (`_personal/`, 5개)
 `~/.claude/skills/` 또는 하네스 등록형 개인 스킬.
 
 | 스킬 | 한 줄 |
@@ -29,6 +29,7 @@ Claude Code 내장 스킬. 별도 파일 없이 하네스에 내장.
 | [delete-session](_personal/delete-session.md) | 세션 jsonl 삭제 |
 | [handover](_personal/handover.md) | 세션 인수인계 md 작성 |
 | [deep-research](_personal/deep-research.md) | 멀티소스 교차검증 리서치 리포트 |
+| [hexagonal-code-review](_personal/hexagonal-code-review.md) | 헥사고날 구조 리뷰와 리팩토링 |
 
 ### 🧩 플러그인 스킬
 
