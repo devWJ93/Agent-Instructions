@@ -33,12 +33,14 @@
 
 ## 🛠️ 제공 도구 / 주요 파라미터
 - **Review Mode**: 파일을 수정하지 않고 PASS/PARTIAL/FAIL verdict, findings, layer classification, remediation plan을 보고한다.
-- **Implementation Mode**: 사용자가 명시적으로 요청한 경우에만 최소 변경으로 작성 또는 리팩토링하고 검증 결과를 보고한다.
+- **Implementation Mode**: 사용자가 명시적으로 요청한 경우에도 먼저 수정 대상, 건드리지 않을 파일, 예상 리스크, 검증 방법을 포함한 구현 계획을 보고하고, 사용자 승인 후 최소 변경으로 작성 또는 리팩토링한다.
 - **공통 참조**: `hexagonal-rules.md`, `review-checklist.md`, `remediation-patterns.md`, `output-formats.md`.
 - **프로파일 참조**: TypeScript/WebGL은 `project-layout-typescript.md`, Unity/C#은 `project-layout-unity-csharp.md`.
+- **출력 포맷**: Review Mode 또는 Implementation Mode 결과를 보고할 때 `output-formats.md` 기준을 적용한다.
 - **핵심 제약**: `.ts` 확장자를 Unity/C#에 강제하지 않고, 파일명보다 역할과 의존 방향을 먼저 판단한다.
 
 ## 📦 출처 / 설치 상태
 - 분류: **개인 글로벌 스킬** (`~/.agents/skills/hexagonal-code-review`).
 - 작성 근거: 초기 임시 자료의 헥사고날 아키텍처 규칙, WebGL 모듈 레이아웃 설명, 기존 준수 리뷰 스킬 초안을 범용화했다.
+- UI 메타데이터는 `openai.yaml` 기준을 맞춰 `short_description` 25~64자 범위를 준수한다.
 - 공개 문서에는 실제 개인 경로와 내부 프로젝트 비밀정보를 포함하지 않는다.
